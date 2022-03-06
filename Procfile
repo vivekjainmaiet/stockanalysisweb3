@@ -1,1 +1,1 @@
- web: sh setup.sh && uvicorn main:app --reload --port 443
+ web: sh setup.sh && uvicorn main:app --host=0.0.0.0 --port=${PORT:-5000}
