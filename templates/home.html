@@ -1,0 +1,175 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<script type="text/javascript">
+//var json = json.parse(list_revenue_chart);
+//document.write("{{list_revenue_chart}}")
+//document.write(input);
+</script>
+<script type="text/javascript">
+  google.charts.load('current', { packages: ['corechart', 'bar'] });
+  google.charts.setOnLoadCallback(drawBasic);
+  function drawBasic() {
+    const data = [];
+    data.push(['Financial Year', 'Revenue']);
+    data.push(['FY 2017', 122187.0]);
+    data.push(['FY 2018', 126746.0]);
+    data.push(['FY 2019', 150774.0]);
+    data.push(['FY 2020', 161541.0]);
+    data.push(['FY 2021', 167311.0]);
+
+    //d_a = [['Financial Year', 'Revenue'], ['FY 2017', 122187.0], ['FY 2018', 126746.0], ['FY 2019', 150774.0], ['FY 2020', 161541.0], ['FY 2021', 167311.0]];
+    var chart_data = new google.visualization.arrayToDataTable(data);
+    var options = {
+      title: 'Revenue Forecast',
+      chartArea: { width: '50%' },
+      hAxis: {
+        title: 'Revenue',
+        minValue: 0
+      },
+      vAxis: {
+        title: 'Financial Year'
+      }
+    };
+
+    var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+
+    chart.draw(chart_data, options);
+  }
+</script>
+<form method="GET">
+<div class="ui fluid action input">
+  <input list="brow" name="search">
+  <datalist id="brow">
+    <option value="">
+  {% for stock_name in stock_list %}
+    <option value="{{stock_name['StockCode']}}">{{stock_name['StockName']}}</option>
+  {% endfor %}
+  </datalist>
+<button class="ui button" type="submit">Search</button>
+</div>
+</form>
+<h1>{{stock['StockName']}}</h1>
+<div class="ui labeled button" tabindex="0">
+  <div class="ui red button">
+    <i class="rupee sign"></i> Price
+  </div>
+  <a class="ui basic red left pointing label">
+    {{technical_data[0]['Close']}}
+  </a>
+</div>
+<br/>
+<span>Symbol : {{stock['StockCode']}}</span>
+<span>Exchange : {{stock['exchange']}}</span>
+<span>Currency : {{stock['Currency']}}</span>
+<br/>
+<br />
+
+<!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+  <div id="tradingview_21e54"></div>
+  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/NASDAQ-AAPL/" rel="noopener"
+      target="_blank"><span class="blue-text">{{stock[1]}}</span></a> by TradingView</div>
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  <script type="text/javascript">
+    new TradingView.widget(
+      {
+        "width": 1080,
+        "height": 610,
+        "symbol": "{{ stock['exchange']}}:{{stock['StockCode']}}",
+        "interval": "D",
+        "timezone": "Etc/UTC",
+        "theme": "light",
+        "style": "1",
+        "locale": "en",
+        "toolbar_bg": "#f1f3f6",
+        "enable_publishing": false,
+        "allow_symbol_change": true,
+        "container_id": "tradingview_21e54"
+      }
+    );
+  </script>
+</div>
+<!-- TradingView Widget END -->
+
+
+<h2>Analyst Recommendations </h2>
+<table class="ui red table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Action</th>
+      <th>Target</th>
+      <th>Analyst</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for recommendation in recommendation_list %}
+    <tr>
+      <td>{{recommendation['date']}}</td>
+      <td>{{recommendation['advice']}} </td>
+      <td>{{recommendation['target']}}</td>
+      <td>{{recommendation['analyst']}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+<h2>News </h2>
+<table class="ui red table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Title</th>
+      <th>Source</th>
+      <th>Link</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for news in news_list %}
+    <tr>
+      <td>{{news['date']}}</td>
+      <td>{{news['title']}} </td>
+      <td>{{news['source']}}</td>
+      {% if news[5] == 'Moneycontrol.com' %}
+      <td><a href="https://www.moneycontrol.com{{news[5]}}" target="_blank">More details</a></td>
+      {% else %}
+      <td><a href="{{news['url']}}" target="_blank">More details</a></td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h2>Technical Data </h2>
+
+<table class="ui red table">
+
+  <thead>
+    <tr>
+      <th>Period</th>
+      <th>SMA</th>
+      <th>Indication</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for key in ['ema12','ema21','ema26','ema34','ema55','ema99','ema200'] %}
+    <tr>
+      <td>{{key}}</td>
+      <td>
+        {{technical_data[0][key]}}
+      </td>
+      {% if technical_data[0]['Close'] > technical_data[0][key] %}
+      <td>Bullish</td>
+      {% else %}
+      <td>Bearish</td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+
+
+{% endblock %}
