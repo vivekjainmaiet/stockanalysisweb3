@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
+
 <script>
 
  // revenue chart
@@ -44,10 +45,10 @@
         datasets: [
           {
             label: "Revenue in (millions)",
-            backgroundColor: ["#3e95cd",
-              "#8e5ea2",
-              "#3cba9f",
-              "#e8c3b9",
+            backgroundColor: ["#c45850",
+              "#c45850",
+              "#c45850",
+              "#c45850",
               "#c45850"],
             data: values_Total_Revenue
           }
@@ -72,11 +73,11 @@
         datasets: [
           {
             label: "Net Income in (millions)",
-            backgroundColor: ["#3e95cd",
-              "#8e5ea2",
+            backgroundColor: ["#3cba9f",
               "#3cba9f",
-              "#e8c3b9",
-              "#c45850"],
+              "#3cba9f",
+              "#3cba9f",
+              "#3cba9f"],
             data: values_Net_Income
           }
         ]
@@ -101,11 +102,11 @@
         datasets: [
           {
             label: "EPS",
-            backgroundColor: ["#3e95cd",
+            backgroundColor: ["#8e5ea2",
               "#8e5ea2",
-              "#3cba9f",
-              "#e8c3b9",
-              "#c45850"],
+              "#8e5ea2",
+              "#8e5ea2",
+              "#8e5ea2"],
             data: values_EPS
           }
         ]
@@ -130,10 +131,10 @@
           {
             label: "EBITA Trend",
             backgroundColor: ["#3e95cd",
-              "#8e5ea2",
-              "#3cba9f",
-              "#e8c3b9",
-              "#c45850"],
+              "#3e95cd",
+              "#3e95cd",
+              "#3e95cd",
+              "#3e95cd"],
             data: values_EBITDA
           }
         ]
@@ -175,54 +176,38 @@ load_bar_chart();
     ]);
 
     var options = {
+      'width': 650,
       'height': 450,
-      pieHole: 0.4,
+      pieHole: 0.1,
     };
 
     var chart = new google.visualization.PieChart(document.getElementById('pichart'));
     chart.draw(data_twitter, options);
   }
 </script>
-<script>
-google.charts.load('current', {packages: ['corechart', 'line']});
-google.charts.setOnLoadCallback(drawClose);
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load('current', { 'packages': ['corechart'] });
+  google.charts.setOnLoadCallback(drawChart);
 
-function drawClose() {
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Year', 'Actual', 'Prediction'],
+      ['2004', 1000, 400],
+      ['2005', 1170, 460],
+      ['2006', 660, 1120],
+      ['2007', 1030, 540]
+    ]);
 
-var data_close = new google.visualization.DataTable();
-data_close.addColumn('number', 'X');
-data_close.addColumn('number', 'y');
+    var options = {
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
 
-data_close.addRows([
-[0, 0], [1, 10], [2, 23], [3, 17], [4, 18], [5, 9],
-[6, 11], [7, 27], [8, 33], [9, 40], [10, 32], [11, 35],
-[12, 30], [13, 40], [14, 42], [15, 47], [16, 44], [17, 48],
-[18, 52], [19, 54], [20, 42], [21, 55], [22, 56], [23, 57],
-[24, 60], [25, 50], [26, 52], [27, 51], [28, 49], [29, 53],
-[30, 55], [31, 60], [32, 61], [33, 59], [34, 62], [35, 65],
-[36, 62], [37, 58], [38, 55], [39, 61], [40, 64], [41, 65],
-[42, 63], [43, 66], [44, 67], [45, 69], [46, 69], [47, 70],
-[48, 72], [49, 68], [50, 66], [51, 65], [52, 67], [53, 70],
-[54, 71], [55, 72], [56, 73], [57, 75], [58, 70], [59, 68],
-[60, 64], [61, 60], [62, 65], [63, 67], [64, 68], [65, 69],
-[66, 70], [67, 72], [68, 75], [69, 80]
-]);
+    var chart = new google.visualization.LineChart(document.getElementById('close_chart'));
 
-var options = {
-  'height': 450,
-  'width': 650,
-hAxis: {
-title: 'Date'
-},
-vAxis: {
-title: 'Price'
-}
-};
-
-var chart = new google.visualization.LineChart(document.getElementById('close_chart'));
-
-chart.draw(data_close, options);
-}
+    chart.draw(data, options);
+  }
 </script>
 <br/>
 <br />
@@ -256,10 +241,14 @@ chart.draw(data_close, options);
     <span>Exchange : {{stock['exchange']}}</span>
     <span>Currency : {{stock['Currency']}}</span>
   </div>
-  </div>
+  <div class="column">
 
+
+  </div>
+  </div>
 <br/>
 <br />
+<h2 class="ui dividing header"></h2>
 <div class="ui stackable equal width grid">
   <div class="column">
     <h2>Twitter Sentiments</h2>
@@ -267,11 +256,256 @@ chart.draw(data_close, options);
   </div>
   <div class="column">
     <h2>Price forcast</h2>
-    <div id="close_chart"></div>
+    <div id="close_chart" style="width: 700px; height: 400px"></div>
   </div>
 </div>
 
+
+
+  <h2>Technical Analysis</h2>
+  <h2 class="ui dividing header"></h2>
+    <div class="ui center aligned equal width grid">
+      <div class="column">
+        <h2 style="color: red;">SELL</h2>
+      </div>
+      <div class="column">
+        <h2 style="color: red;">SELL</h2>
+      </div>
+      <div class="column">
+        <h2 style="color: red;">SELL</h2>
+      </div>
+    </div>
+  <div id="chart_div" style="width: 400px; height: 400px;"></div>
+
+<br />
+<br />
+
+<div class="ui stackable equal width grid">
+  <div class="column">
+    <h2>Oscillators</h2>
+    <h2 class="ui dividing header"></h2>
+
+    <table class="ui very basic collapsing celled table">
+      <tbody>
+        <tr>
+          <th>Name</th>
+          <th>Value</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td><span>Relative Strength Index (14)</span></td>
+          <td>37.75</td>
+          <td>Neutral</td>
+        </tr>
+        <tr>
+          <td><span>Stochastic
+              %K (14, 3, 3)</span></td>
+          <td>51.08</td>
+          <td>Neutral</td>
+        </tr>
+        <tr>
+          <td><span>Commodity Channel Index (20)</span></td>
+          <td>−105.62</td>
+          <td>Neutral</td>
+        </tr>
+        <tr>
+          <td><span>Average Directional Index(14)</span></td>
+          <td>24.21</td>
+          <td>Neutral</td>
+        </tr>
+        <tr>
+          <td><span>Awesome
+              Oscillator</span></td>
+          <td>−2.99</td>
+          <td>Sell</td>
+        </tr>
+        <tr>
+          <td><span>Momentum
+              (10)</span></td>
+          <td>−8.00</td>
+          <td>Sell</td>
+        </tr>
+        <tr>
+          <td><span>MACD Level (12,26)</span></td>
+          <td>−2.06</td>
+          <td>Sell</td>
+        </tr>
+        <tr>
+          <td><span>Stochastic
+              RSI Fast(3, 3, 14, 14)</span></td>
+          <td>40.41</td>
+          <td>Neutral</td>
+        </tr>
+        <tr>
+          <td><span>Williams Percent
+              Range (14)</span></td>
+          <td>−65.79</td>
+          <td>Neutral</td>
+        </tr>
+        <tr>
+          <td><span>Bull Bear
+              Power</span></td>
+          <td>−5.83</td>
+          <td>Neutral</td>
+        </tr>
+        <tr>
+          <td><span>Ultimate
+              Oscillator (7, 14, 28)</span></td>
+          <td>48.22</td>
+          <td>Neutral</td>
+        </tr>
+      </tbody>
+    </table>
+
+
+  </div>
+  <div class="column">
+    <h2>Moving Averages</h2>
+    <h2 class="ui dividing header"></h2>
+
+    <table class="ui very basic collapsing celled table">
+      <tbody>
+        <tr>
+          <th>Name</th>
+          <th>Value</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td><span>Exponential Moving
+              Average (10)</span></td>
+          <td>164.28</td>
+          <td>Sell</td>
+        </tr>
+        <tr>
+          <td><span>Simple
+              Moving Average (10)</span></td>
+          <td>163.56</td>
+          <td>Sell</td>
+        </tr>
+        <tr>
+          <td><span>Exponential Moving
+              Average (20)</span></td>
+          <td>166.12</td>
+          <td>Sell</td>
+        </tr>
+        <tr>
+          <td><span>Simple
+              Moving Average (20)</span></td>
+          <td>167.47</td>
+          <td>Sell</td>
+        </tr>
+        <tr>
+          <td><span>Exponential Moving
+              Average (30)</span></td>
+          <td>167.10</td>
+          <td>Sell</td>
+        </tr>
+        <tr>
+          <td><span>Simple
+              Moving Average (30)</span></td>
+          <td>167.69</td>
+          <td>Sell</td>
+        </tr>
+        <tr>
+          <td><span>Exponential Moving
+              Average(50)</span></td>
+          <td>167.28</td>
+          <td>Sell</td>
+        </tr>
+        <tr>
+          <td><span>Simple
+              Moving Average (50)</span></td>
+          <td>170.27</td>
+          <td>Sell</td>
+        </tr>
+        <tr>
+          <td><span>Exponential Moving
+              Average (100)</span></td>
+          <td>163.63</td>
+          <td>Sell</td>
+        </tr>
+        <tr>
+          <td><span>Simple
+              Moving Average (100)</span></td>
+          <td>164.21</td>
+          <td>Sell</td>
+        </tr>
+        <tr>
+          <td><span>Exponential Moving
+              Average(200)</span></td>
+          <td>154.37</td>
+          <td>Buy</td>
+        </tr>
+        <tr>
+          <td><span>Simple
+              Moving Average (200)</span></td>
+          <td>152.97</td>
+          <td>Buy</td>
+        </tr>
+        <tr>
+          <td><span>Ichimoku
+              Base Line (9, 26, 52, 26)</span></td>
+          <td>164.33</td>
+          <td>Neutral</td>
+        </tr>
+        <tr>
+          <td><span>Volume Weighted Moving
+              Average (20)</span></td>
+          <td>166.97</td>
+          <td>Sell</td>
+        </tr>
+        <tr>
+          <td><span>Hull Moving
+              Average(9)</span></td>
+          <td>163.58</td>
+          <td>Sell</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    </div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load('current', { 'packages': ['gauge'] });
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+
+    var data = google.visualization.arrayToDataTable([
+      ['Label', 'Value'],
+      ['Oscillators', 30],
+      ['Summary', 30],
+      ['Moving Avg', 10]
+    ]);
+
+    var options = {
+      width:1130,
+      height: 400,
+      greenFrom: 50,
+      greenTo: 100,
+      redFrom: 0,
+      redTo: 50,
+      minorTicks: 10,
+      majorTicks: ['0%', '100%']
+    };
+
+    var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+
+    chart.draw(data, options);
+
+    setInterval(function () {
+      chart.draw(data, options);
+    }, 3.5);
+  }
+
+</script>
+
+<br />
+<br />
+
 <h2>Fundamental Analysis</h2>
+<h2 class="ui dividing header"></h2>
 <div class="ui stackable equal width grid">
   <div class="column">
   <canvas id="revenue-chart" height="400" style="height: 400px; display: block; width: 400px;" width="500">
@@ -295,96 +529,84 @@ chart.draw(data_close, options);
   </div>
 </div>
 
+<br />
+<br />
+
 <div class="ui stackable equal width grid">
   <div class="column">
-    A
+    <h2>Analyst Recommendations </h2>
+    <h2 class="ui dividing header"></h2>
+    <table class="ui red table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Action</th>
+          <th>Target</th>
+          <th>Analyst</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for recommendation in recommendation_list %}
+        <tr>
+          <td>{{recommendation['date']}}</td>
+          <td>{{recommendation['advice']}} </td>
+          <td>{{recommendation['target']}}</td>
+          <td>{{recommendation['analyst']}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
-
-
+  <br/>
+  <br/>
   <div class="column">
-    B
+    <h2>Analyst Recommendations </h2>
+    <h2 class="ui dividing header"></h2>
+    <table class="ui red table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Action</th>
+          <th>Target</th>
+          <th>Analyst</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for recommendation in recommendation_list %}
+        <tr>
+          <td>{{recommendation['date']}}</td>
+          <td>{{recommendation['advice']}} </td>
+          <td>{{recommendation['target']}}</td>
+          <td>{{recommendation['analyst']}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 </div>
 
-
-<h2>Analyst Recommendations </h2>
-<table class="ui red table">
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Action</th>
-      <th>Target</th>
-      <th>Analyst</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for recommendation in recommendation_list %}
-    <tr>
-      <td>{{recommendation['date']}}</td>
-      <td>{{recommendation['advice']}} </td>
-      <td>{{recommendation['target']}}</td>
-      <td>{{recommendation['analyst']}}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
+<br />
+<br />
 
 <h2>News </h2>
-<table class="ui red table">
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Title</th>
-      <th>Source</th>
-      <th>Link</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for news in news_list %}
-    <tr>
-      <td>{{news['date']}}</td>
-      <td><div style="word-wrap: break-word;">{{news['title']}}</div>
-         </td>
-      <td>{{news['source']}}</td>
-      {% if news[5] == 'Moneycontrol.com' %}
-      <td><a href="https://www.moneycontrol.com{{news[5]}}" target="_blank">More details</a></td>
-      {% else %}
-      <td><a href="{{news['url']}}" target="_blank">More details</a></td>
-      {% endif %}
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+<h2 class="ui dividing header"></h2>
+{% for news in news_list %}
+<div class="ui relaxed divided items">
+  <div class="item">
+    <div class="ui small image">
+      <img src=".\image.png">
+    </div>
+    <div class="content">
+      <a class="header">{{news['title']}}</a>
+      <div class="meta">
+        <a>{{news['date']}}</a>
+        <a href="https://www.moneycontrol.com{{news['url']}}" target="_blank">{{news['source']}}</a>
+      </div>
+    </div>
+  </div>
 
-<h2>Technical Data </h2>
-
-<table class="ui red table">
-
-  <thead>
-    <tr>
-      <th>Period</th>
-      <th>SMA</th>
-      <th>Indication</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for key in ['ema12','ema21','ema26','ema34','ema55','ema99','ema200'] %}
-    <tr>
-      <td>{{key}}</td>
-      <td>
-        {{technical_data[0][key]}}
-      </td>
-      {% if technical_data[0]['Close'] > technical_data[0][key] %}
-      <td>Bullish</td>
-      {% else %}
-      <td>Bearish</td>
-      {% endif %}
-    </tr>
-    {% endfor %}
-
-  </tbody>
-</table>
-
+  <br />
+  <br />
+  {% endfor %}
 
 {% endblock %}
